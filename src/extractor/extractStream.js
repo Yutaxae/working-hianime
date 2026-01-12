@@ -63,7 +63,7 @@ async function extractHD4Stream(epID, serverType) {
     const directUrl = sourcesData.sources.file;
     const encodedUrl = encodeURIComponent(directUrl);
     const encodedReferer = encodeURIComponent('https://megaplay.buzz');
-    const proxiedUrl = `https://working-hianime.vercel.app/api/proxy?url=${encodedUrl}&referer=${encodedReferer}`;
+    const proxiedUrl = `https://working-hianime.vercel.app/api/v1/proxy?url=${encodedUrl}&referer=${encodedReferer}`;
 
     console.log('HD-4: Successfully extracted streaming link');
 
@@ -120,7 +120,7 @@ export const extractStream = async ({ selectedServer, id }) => {
 
     const encodedUrl = encodeURIComponent(directUrl);
     const encodedReferer = encodeURIComponent(referer);
-    const proxiedUrl = `https://working-hianime.vercel.app/api/proxy?url=${encodedUrl}&referer=${encodedReferer}`;
+    const proxiedUrl = `https://working-hianime.vercel.app/api/v1/proxy?url=${encodedUrl}&referer=${encodedReferer}`;
 
     streamingLink.link.directUrl = directUrl;
     streamingLink.link.file = proxiedUrl;
