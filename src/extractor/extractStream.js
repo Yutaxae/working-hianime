@@ -120,7 +120,7 @@ export const extractStream = async ({ selectedServer, id }) => {
 
     const encodedUrl = encodeURIComponent(directUrl);
     const encodedReferer = encodeURIComponent(referer);
-    const proxiedUrl = `https://vercel-proxy-ryanwtf88.vercel.app/api/proxy?url=${encodedUrl}&referer=${encodedReferer}`;
+    const proxiedUrl = `https://working-hianime.vercel.app/api/proxy?url=${encodedUrl}&referer=${encodedReferer}`;
 
     streamingLink.link.directUrl = directUrl;
     streamingLink.link.file = proxiedUrl;
