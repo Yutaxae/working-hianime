@@ -10,11 +10,30 @@ const proxyController = async (c) => {
 
     try {
         const rangeHeader = c.req.header('range');
+
+        // Extract origin from referer (use just the host, not full URL)
+        let origin = referer || 'https://megacloud.tv';
+        try {
+            const refererUrl = new URL(referer);
+            origin = `${refererUrl.protocol}//${refererUrl.host}`;
+        } catch (e) {
+            // Use referer as-is if parsing fails
+        }
+
+        // Use modern Chrome headers to bypass CDN blocking
         const fetchHeaders = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-            'Referer': referer || 'https://megacloud.tv',
-            'Origin': referer || 'https://megacloud.tv',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            'Referer': referer || 'https://megacloud.tv/',
+            'Origin': origin,
             'Accept': '*/*',
+            'Accept-Language': 'en-US,en;q=0.9',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'sec-ch-ua': '"Not_A Brand";v="8", "Chromium";v="120", "Google Chrome";v="120"',
+            'sec-ch-ua-mobile': '?0',
+            'sec-ch-ua-platform': '"Windows"',
+            'sec-fetch-dest': 'empty',
+            'sec-fetch-mode': 'cors',
+            'sec-fetch-site': 'cross-site',
         };
 
         if (rangeHeader) {
@@ -90,7 +109,7 @@ const proxyController = async (c) => {
         if (response.status === 206 || contentRange) {
             c.status(206);
         }
-        
+
         return c.body(response.body);
 
     } catch (error) {
